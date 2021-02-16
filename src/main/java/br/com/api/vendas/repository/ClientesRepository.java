@@ -17,8 +17,8 @@ public interface ClientesRepository extends JpaRepository<Cliente, Integer>{
 	//o exists vai fazer a pesquisa por nome e retornar um boolean
 	boolean existsByNome (String nome);
 	
-	@Query ("select c from Cliente c left join fetch c.pedido where c.id =:id")
-	Cliente findClienteFetchPedidos (@Param("id") Integer id);
-	
+//	@Query ("select c from Cliente c left join fetch c.pedido where c.id =:id")
+//	Cliente findClienteFetchPedidos (@Param("id") Integer id);
+//	
 	
 }
