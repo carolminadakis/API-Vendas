@@ -1,7 +1,6 @@
 package br.com.api.vendas.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
@@ -9,8 +8,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,6 +22,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import br.com.api.vendas.model.Cliente;
 import br.com.api.vendas.repository.ClientesRepository;
+import static org.springframework.http.HttpStatus.*;
 
 @RestController
 @RequestMapping("/clientes")
@@ -36,40 +35,40 @@ public class ClienteController {
 	@GetMapping("/{id}")
 	public Cliente getClienteById (@PathVariable Integer id) {
 		return cr.findById(id)
-				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+				.orElseThrow(() -> new ResponseStatusException(NOT_FOUND,
 												"Cliente não encontrado")); 
 	}
 	
 //Salvando cliente
 	@PostMapping
 	@Transactional
-	@ResponseStatus(HttpStatus.CREATED)
+	@ResponseStatus(CREATED)
 	public Cliente save (@RequestBody @Valid Cliente cliente) {
 		return cr.save(cliente);
 	}
 	
 //Deletando cliente
 	@DeleteMapping("/{id}")
-	@ResponseStatus(HttpStatus.NO_CONTENT)
+	@ResponseStatus(NO_CONTENT)
 	@Transactional
 	public void delete(@PathVariable Integer id) {
 		cr.findById(id)
 		.map(cliente -> { cr.delete(cliente);
 			return cliente;
 		})
-		.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado")); 
+		.orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Cliente não encontrado")); 
 	}
 	
 //Atualizando dados do cliente
 	@PutMapping("/{id}")
-	@ResponseStatus(HttpStatus.NO_CONTENT)
+	@ResponseStatus(NO_CONTENT)
 	@Transactional
 	public void update(@PathVariable Integer id, @Valid @RequestBody Cliente cliente) {
 		 cr.findById(id)
 				.map(clienteExistente -> {cliente.setId(clienteExistente.getId());
 				cr.save(cliente);
 				return cliente;
-				}).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+				}).orElseThrow(() -> new ResponseStatusException(NOT_FOUND,
 						"Cliente não encontrado")); 
 	}
 	

@@ -2,7 +2,8 @@ package br.com.api.vendas.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Set;
+import java.util.List;
+
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,6 +14,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class Pedido {
 
@@ -32,30 +40,6 @@ public class Pedido {
 	private BigDecimal total;
 	
 	@OneToMany(mappedBy = "pedido") //deve ser usado entre as aspas o nome da propriedade que representa Pedido na classe ItemPedido
-	private Set<ItemPedido> itens;
+	private List<ItemPedido> itens;
 	
-	public Integer getId() {
-		return id;
-	}
-	public void setId(Integer id) {
-		this.id = id;
-	}
-	public Cliente getCliente() {
-		return cliente;
-	}
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
-	}
-	public LocalDate getDataPedido() {
-		return dataPedido;
-	}
-	public void setDataPedido(LocalDate dataPedido) {
-		this.dataPedido = dataPedido;
-	}
-	public BigDecimal getTotal() {
-		return total;
-	}
-	public void setTotal(BigDecimal total) {
-		this.total = total;
-	}
 }
